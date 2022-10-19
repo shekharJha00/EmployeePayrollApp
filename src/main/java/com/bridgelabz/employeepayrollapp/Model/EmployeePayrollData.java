@@ -1,43 +1,55 @@
 package com.bridgelabz.employeepayrollapp.Model;
 
 import com.bridgelabz.employeepayrollapp.dto.EmployeePayrollDto;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class EmployeePayrollData {
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.List;
 
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "employee_payroll")
+public @Data class EmployeePayrollData {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "empId")
     private long empId;
+    @Column(name = "empName")
     private String empName;
+
     private long salary;
 
-    public EmployeePayrollData(long empId, EmployeePayrollDto employeePayrollDto) {
-        this.empId = empId;
-        this.empName = employeePayrollDto.empName;
-        this.salary = employeePayrollDto.salary;
+    private String gender;
+
+    private LocalDate startDate;
+
+    private String note;
+
+    private String profilePic;
+
+    @ElementCollection
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "department")
+    private List<String> department;
+
+    public EmployeePayrollData(EmployeePayrollDto employeePayrollDto) {
+        this.updateEmployeePayrollData(employeePayrollDto);
     }
 
-    public EmployeePayrollData(String empName, long salary) {
-    }
-
-    public long getEmpId() {
-        return empId;
-    }
-
-    public void setEmpId(long empId) {
-        this.empId = empId;
-    }
-
-    public String getEmpName() {
-        return empName;
-    }
-
-    public void setEmpName(String empName) {
-        this.empName = empName;
-    }
-
-    public double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(long salary) {
-        this.salary = salary;
+    public void updateEmployeePayrollData(EmployeePayrollDto employeePayrollDTO) {
+        this.empName = employeePayrollDTO.getEmpName();
+        this.salary = employeePayrollDTO.getSalary();
+        this.department = employeePayrollDTO.getDepartment();
+        this.gender = employeePayrollDTO.getGender();
+        this.note = employeePayrollDTO.getNote();
+        this.startDate = employeePayrollDTO.getStartDate();
+        this.profilePic = employeePayrollDTO.getProfilePic();
     }
 }
+
+

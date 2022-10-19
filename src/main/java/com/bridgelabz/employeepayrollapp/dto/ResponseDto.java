@@ -1,5 +1,9 @@
 package com.bridgelabz.employeepayrollapp.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
 public class ResponseDto {
 
    private String message;
@@ -10,19 +14,5 @@ public class ResponseDto {
         this.data = data;
     }
 
-    public String getMessage() {
-        return message;
-    }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
 }
